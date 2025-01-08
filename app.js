@@ -3,56 +3,56 @@ const { createApp } = Vue
 const app = createApp({
     data() {
         return {
-            features: [
-                {
-                    icon: 'fas fa-magic',
-                    title: 'AI-Powered Generation',
-                    description: 'Advanced artificial intelligence transforms your text into compelling video content automatically.'
-                },
-                {
-                    icon: 'fas fa-bolt',
-                    title: 'Lightning Fast',
-                    description: 'Generate professional videos in minutes, not hours. Save time and resources.'
-                },
-                {
-                    icon: 'fas fa-palette',
-                    title: 'Customizable Styles',
-                    description: 'Choose from a variety of visual styles and themes to match your brand identity.'
-                },
-                {
-                    icon: 'fas fa-chart-line',
-                    title: 'High Engagement',
-                    description: 'Create videos that capture attention and drive engagement with your audience.'
-                },
-                {
-                    icon: 'fas fa-mobile-alt',
-                    title: 'Mobile Optimized',
-                    description: 'Videos perfectly formatted for all devices and social media platforms.'
-                },
-                {
-                    icon: 'fas fa-brain',
-                    title: 'Smart Scene Selection',
-                    description: 'AI automatically selects the most relevant visuals for your content.'
-                }
-            ],
-            steps: [
-                {
-                    title: 'Input Your Text',
-                    description: 'Simply paste your script, article, or any text content into our platform.'
-                },
-                {
-                    title: 'AI Processing',
-                    description: 'Our advanced AI analyzes your content and selects appropriate visuals and transitions.'
-                },
-                {
-                    title: 'Generate Video',
-                    description: 'Watch as your text is transformed into a professional, engaging video.'
-                },
-                {
-                    title: 'Download & Share',
-                    description: 'Export your video in high quality and share it across any platform.'
-                }
+            videoDescription: '',
+            charCount: 0,
+            selectedStyle: null,
+            showProModal: false,
+            generationCount: 0,
+            videoStyles: [
+                { id: 'mountain', name: 'Mountain Landscape' },
+                { id: 'city', name: 'City Timelapse' },
+                { id: 'ocean', name: 'Ocean Waves' },
+                { id: 'dance', name: 'Dancing Performance' },
+                { id: 'nature', name: 'Nature Wildlife' },
+                { id: 'space', name: 'Space Journey' }
             ]
+        }
+    },
+    methods: {
+        updateCharCount() {
+            this.charCount = this.videoDescription.length
+            if (this.charCount > 1000) {
+                this.videoDescription = this.videoDescription.slice(0, 1000)
+                this.charCount = 1000
+            }
+        },
+        selectStyle(styleId) {
+            this.selectedStyle = styleId
+        },
+        enhanceText() {
+            if (this.generationCount >= 3) {
+                this.showProModal = true
+                return
+            }
+            // Placeholder for text enhancement functionality
+            console.log('Enhancing text...')
+        },
+        generateVideo() {
+            if (this.generationCount >= 3) {
+                this.showProModal = true
+                return
+            }
+            this.generationCount++
+            if (this.generationCount >= 3) {
+                this.showProModal = true
+            } else {
+                // Placeholder for video generation functionality
+                console.log('Generating video...')
+                window.location.href = 'https://saifs.ai/text-to-video'
+            }
+        },
+        closeProModal() {
+            this.showProModal = false
         }
     }
 })

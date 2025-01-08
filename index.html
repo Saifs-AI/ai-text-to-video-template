@@ -12,79 +12,78 @@
 </head>
 <body>
     <div id="app">
-        <header>
-            <nav>
-                <div class="logo"> <a style="text-decoration: none;" href="https://saifs.ai">AI Video Creator</a></div>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="https://saifs.ai/text-to-video" class="cta-button">Try Now</a>
-                </div>
-            </nav>
-        </header>
+        <main class="main-container">
+            <h1 class="main-title">Text to Video Generator</h1>
+            <p class="subtitle">Create stunning videos from your descriptions in seconds</p>
 
-        <main>
-            <section class="hero">
-                <div class="hero-content">
-                    <h1>Transform Your Text into Engaging Videos</h1>
-                    <p>Harness the power of AI to convert your text into professional-quality videos in minutes</p>
-                    <a href="https://saifs.ai/text-to-video" class="cta-button">Get Started</a>
+            <div class="video-generator">
+                <div class="input-section">
+                    <div class="text-input-container">
+                        <div class="input-header">
+                            <div class="input-title">Describe your video</div>
+                            <button class="enhance-btn" @click="enhanceText">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                Enhance
+                            </button>
+                        </div>
+                        <textarea 
+                            v-model="videoDescription" 
+                            placeholder="Example: A serene mountain landscape at sunset, with clouds drifting over snow-capped peaks..."
+                            @input="updateCharCount"
+                            class="video-input"
+                        ></textarea>
+                        <div class="char-count">{{ charCount }}/1000</div>
+                    </div>
+
+                    <div class="style-buttons">
+                        <button 
+                            v-for="style in videoStyles" 
+                            :key="style.id" 
+                            :class="['style-btn', { active: selectedStyle === style.id }]"
+                            @click="selectStyle(style.id)"
+                        >
+                            {{ style.name }}
+                        </button>
+                    </div>
+
+                    <button class="generate-btn" @click="generateVideo">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        Generate Video
+                    </button>
                 </div>
-                <div class="hero-animation">
-                    <div class="floating-elements">
-                        <i class="fas fa-video"></i>
-                        <i class="fas fa-font"></i>
-                        <i class="fas fa-magic"></i>
+
+                <div class="preview-section">
+                    <div class="video-preview">
+                        <i class="fas fa-video preview-icon"></i>
+                        <p>Your generated video will appear here</p>
                     </div>
                 </div>
-            </section>
-
-            <section id="features" class="features">
-                <h2>Key Features</h2>
-                <div class="feature-grid">
-                    <div class="feature-card" v-for="feature in features">
-                        <i :class="feature.icon"></i>
-                        <h3>{{ feature.title }}</h3>
-                        <p>{{ feature.description }}</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="how-it-works" class="how-it-works">
-                <h2>How It Works</h2>
-                <div class="steps">
-                    <div class="step" v-for="(step, index) in steps">
-                        <div class="step-number">{{ index + 1 }}</div>
-                        <h3>{{ step.title }}</h3>
-                        <p>{{ step.description }}</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="cta">
-                <h2>Ready to Create Amazing Videos?</h2>
-                <p>Join thousands of content creators who trust our AI-powered video generation</p>
-                <a href="https://saifs.ai/text-to-video" class="cta-button">Start Creating Now</a>
-            </section>
+            </div>
         </main>
 
-        <footer>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>AI Video Creator</h3>
-                    <p>Transform your content with the power of AI</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <a href="#features">Features</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="https://saifs.ai/text-to-video">Try Now</a>
-                </div>
+        <!-- Pro Upgrade Modal -->
+        <div v-if="showProModal" class="modal-overlay" @click="closeProModal"></div>
+        <div v-if="showProModal" class="upgrade-modal">
+            <h2>Upgrade to Pro</h2>
+            <p>Get access to advanced features and create unlimited videos</p>
+            
+            <ul class="features-list">
+                <li><i class="fas fa-check"></i> Unlimited video generations</li>
+                <li><i class="fas fa-check"></i> Higher resolution output</li>
+                <li><i class="fas fa-check"></i> Priority processing</li>
+                <li><i class="fas fa-check"></i> Advanced customization options</li>
+                <li><i class="fas fa-check"></i> Commercial usage rights</li>
+            </ul>
+
+            <div class="modal-buttons">
+                <a href="https://saifs.ai/text-to-video" class="upgrade-btn">
+                    Upgrade to Pro
+                </a>
+                <button class="continue-free-btn" @click="closeProModal">
+                    Continue with Free
+                </button>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 AI Video Creator. All rights reserved.</p>
-            </div>
-        </footer>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
